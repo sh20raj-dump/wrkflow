@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDB } from '@/lib/db';
 import { ratings, users } from '@/lib/db/schema';
-import { eq, desc, avg, count } from 'drizzle-orm';
+import { eq, desc, avg, count, and } from 'drizzle-orm';
 import { getCurrentUser } from '@/lib/auth';
 
 /**
@@ -94,8 +94,7 @@ export async function POST(
         const existingRating = await db
             .select({ id: ratings.id })
             .from(ratings)
-            .where(eq(ratings.workflowId, id))
-            .where(eq(ratings.userId, user.id))
+            .where(and(eq(ratings.workflowId, id), eq(ratings.userId, user.id)))
             .limit(1);
 
         if (existingRating.length > 0) {

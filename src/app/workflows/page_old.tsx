@@ -5,13 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter, Eye, Download, Star } from "lucide-react";
 import Link from "next/link";
-import { db } from "@/lib/db";
+import { getDB } from "@/lib/db";
 import { workflows, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function WorkflowsPage() {
     // Get all workflows with user info
-    const allWorkflows = await db.instance
+    const db = getDB();
+    const allWorkflows = await db
         .select({
             id: workflows.id,
             title: workflows.title,
@@ -67,7 +68,7 @@ export default async function WorkflowsPage() {
                     </div>
                 ) : (
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {allWorkflows.map((workflow) => (
+                        {allWorkflows.map((workflow: any) => (
                             <Card key={workflow.id} className="hover:shadow-lg transition-shadow overflow-hidden">
                                 {workflow.coverImage && (
                                     <div className="aspect-video w-full overflow-hidden">

@@ -34,7 +34,7 @@ function getEnv() {
         return envSchema.parse(env);
     } catch (error) {
         if (error instanceof z.ZodError) {
-            const missingVars = error.errors.map(err => err.path.join('.'));
+            const missingVars = (error as any).errors.map((err: any) => err.path.join('.'));
             throw new Error(`Missing or invalid environment variables: ${missingVars.join(', ')}`);
         }
         throw error;

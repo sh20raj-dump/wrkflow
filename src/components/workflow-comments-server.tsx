@@ -110,6 +110,7 @@ export async function WorkflowCommentsServer({ workflowId, currentUserId }: Work
                             workflowId={workflowId}
                             parentId={comment.id}
                             isReply={true}
+                            isAuthenticated={!!currentUserId}
                         />
                     )}
                 </div>

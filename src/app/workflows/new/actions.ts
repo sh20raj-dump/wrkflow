@@ -6,6 +6,7 @@ import { workflows, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { generateUniqueSlug } from "@/lib/slug-utils";
 
 export async function createWorkflow(formData: FormData) {
     try {
@@ -62,6 +63,7 @@ export async function createWorkflow(formData: FormData) {
             .insert(workflows)
             .values({
                 title: title.trim(),
+                slug: await generateUniqueSlug(title.trim()),
                 description: description.trim(),
                 coverImage: coverImage?.trim() || null,
                 posterImage: posterImage?.trim() || null,

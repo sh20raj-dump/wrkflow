@@ -177,7 +177,7 @@ export default function NewWorkflowPage() {
 
             if (result.success) {
                 toast.success("Workflow created successfully!");
-                router.push(`/workflows/w/${result.workflow?.slug || result.workflow?.id}`);
+                router.push(`/workflows/w/${(result.workflow as any)?.slug || (result.workflow as any)?.id}`);
             } else {
                 toast.error(result.error || "Failed to create workflow");
             }

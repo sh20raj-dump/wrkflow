@@ -12,6 +12,6 @@ export function useAuth() {
         isLoading: user === undefined,
         signIn: () => stackApp.redirectToSignIn(),
         signUp: () => stackApp.redirectToSignUp(),
-        signOut: () => stackApp.signOut(),
+        signOut: () => stackApp.redirectToSignOut(),
     };
 }

@@ -1,4 +1,5 @@
 import { getDB } from '@/lib/db';
+import { generateUniqueSlug } from '@/lib/slug-utils';
 import { users, workflows } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 
@@ -199,9 +200,10 @@ async function seedWorkflows() {
     for (let i = 0; i < allWorkflows.length && insertedCount < 50; i += batchSize) {
       const batch = allWorkflows.slice(i, i + batchSize).slice(0, 50 - insertedCount);
       
-      const workflowsToInsert = batch.map(workflow => ({
+      const workflowsToInsert = await Promise.all(batch.map(async (workflow) => ({
         ...workflow,
         userId,
+        slug: await generateUniqueSlug(workflow.title),
         coverImage: `https://picsum.photos/800/600?random=${i + Math.random()}`,
         posterImage: `https://picsum.photos/1200/800?random=${i + Math.random() + 1000}`,
         youtubeUrl: Math.random() > 0.8 ? `https://youtube.com/watch?v=dQw4w9WgXcQ${i}` : null,
@@ -213,7 +215,7 @@ async function seedWorkflows() {
           `https://picsum.photos/800/600?random=${i + 4000}`,
           `https://picsum.photos/800/600?random=${i + 5000}`
         ])
-      }));
+      })));
 
       const insertedWorkflows = await db
         .insert(workflows)

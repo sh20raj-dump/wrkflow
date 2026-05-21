@@ -48,7 +48,7 @@ export async function GET(
             ...parent,
             replies: replies
                 .filter(reply => reply.parentId === parent.id)
-                .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+                .sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime())
         }));
 
         return NextResponse.json({

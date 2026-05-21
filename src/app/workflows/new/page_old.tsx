@@ -244,8 +244,8 @@ export default function NewWorkflowPageOld() {
                                             <p className="text-sm text-green-700 font-medium">✓ Valid JSON detected</p>
                                             <p className="text-xs text-green-600">
                                                 Workflow: {jsonPreview.name || 'Unnamed'} | 
-                                                Nodes: {jsonPreview.nodes?.length || 0} | 
-                                                Connections: {Object.keys(jsonPreview.connections || {}).length}
+                                                Nodes: {(jsonPreview.nodes as any)?.length || 0} | 
+                                                Connections: {Object.keys((jsonPreview.connections as any) || {}).length}
                                             </p>
                                         </div>
                                     )}

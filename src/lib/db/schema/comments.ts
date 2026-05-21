@@ -3,7 +3,7 @@ import { createId } from '@/lib/utils';
 import { workflows } from './workflows';
 import { users } from './users';
 
-export const comments = sqliteTable('comments', {
+export const comments: any = sqliteTable('comments', {
     id: text('id').primaryKey().$defaultFn(() => createId()),
     content: text('content').notNull(),
     userId: text('user_id').notNull().references(() => users.id),

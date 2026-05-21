@@ -62,7 +62,6 @@ export async function GET(
             .select({
                 id: tags.id,
                 name: tags.name,
-                slug: tags.slug,
             })
             .from(tags)
             .innerJoin(workflowsToTags, eq(tags.id, workflowsToTags.tagId))

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDB } from '@/lib/db';
 import { workflows, users } from '@/lib/db/schema';
 import { eq, like, and, or, desc, asc, count } from 'drizzle-orm';
+import { generateUniqueSlug } from '@/lib/slug-utils';
 
 export async function GET(request: NextRequest) {
     try {
@@ -249,6 +250,7 @@ export async function POST(request: NextRequest) {
             .insert(workflows)
             .values({
                 title: title.trim(),
+                slug: await generateUniqueSlug(title.trim()),
                 description: description.trim(),
                 coverImage: coverImage?.trim() || null,
                 posterImage: posterImage?.trim() || null,
